@@ -10,18 +10,18 @@ import tkinter as tk
 class SystemMessages:
     # *** CONSTRUCTORS ***
     def __init__(self, label: tk.Label):
-        self._queue = []
-        self._lbl_sysmessage = label
-        self._displaying = False
+        self._queue = [] # Interne FIFO-Warteschlange für Nachrichten
+        self._lbl_sysmessage = label # Referenz auf das Anzeige-Label
+        self._displaying = False # Flag: Zeigt an, ob gerade eine Nachricht aktiv
 
     # *** PUBLIC SET methods ***
 
     # *** PUBLIC methods ***
 
     def push(self, message):
-        self._queue.append(message)
-        if not self._displaying:
-            self._display_next_message()
+        self._queue.append(message) # Nachricht an FIFO-Warteschlange anhängen
+        if not self._displaying: # Nur starten, wenn keine Anzeige läuft
+            self._display_next_message() # Nächste Nachricht anzeigen
 
     # *** PUBLIC GET methods ***
 

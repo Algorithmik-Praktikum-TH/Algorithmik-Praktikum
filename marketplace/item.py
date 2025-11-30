@@ -1,6 +1,6 @@
 # Definiert die Klasse Item.
 # Die Klasse beschreibt ein Produkt, das über den Marktplatz über eine Auktion ersteigert/verkauft werden kann.
-# Ein Produkt hat einen Namen, eine Beschreibung und ein Wert für ein Mindestgebot. Der Besitzer des Produkts
+# Ein Produkt hat einen Namen, eine Beschreibung und einen Wert für ein Mindestgebot. Der Besitzer des Produkts
 # wird über die Auktion definiert, da der Besitzer in der Auktion ja wechselt. die eindeutige Identifizierung eines
 # Produkts erfolgt über die id der zugehörigen Auktion, deshalb hat diese Klasse keine id.
 

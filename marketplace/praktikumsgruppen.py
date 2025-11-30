@@ -81,13 +81,18 @@ class Praktikumsgruppen(dict):
             user_ids (list): A list of user IDs.
             groupnumbers (list): A list of group numbers corresponding to the user IDs.
         """
-        # TODO: implement in Praktikum 1*
+
         self._group_map = {}
         self._groups = {}
+        # Iteriere über die Paare von (User-ID, Gruppennummer)
         for uid, gnr in zip(user_ids, groupnumbers):
+            # 1. Mapping User -> Gruppe speichern
             self._group_map[uid] = gnr
+
+            # 2. Mapping Gruppe -> Set von Usern pflegen
             if gnr not in self._groups:
                 self._groups[gnr] = set()
+
             self._groups[gnr].add(uid)
 
     # *** PUBLIC GET methods ***
@@ -102,13 +107,18 @@ class Praktikumsgruppen(dict):
         Returns:
             list: A list of user IDs in the same group.
         """
-        # TODO: implement in Praktikum 1*
+
+        # Finde die Gruppennummer des Users
         gnr = self._group_map.get(user_id)
+
+        # Wenn der User in keiner Gruppe ist, gib leere Liste zurück
         if gnr is None:
             return []
+
+        # Gib die Mitglieder dieser Gruppe zurück (als Liste)
         return list(self._groups[gnr])
 
-    # *** PUBLIC STATIC methods ***
+# *** PUBLIC STATIC methods ***
 
     # *** PRIVATE methods ***
 
