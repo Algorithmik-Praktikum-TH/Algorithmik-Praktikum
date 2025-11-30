@@ -655,7 +655,7 @@ class AuctionAppInit:
         tuple_list = list(counter.items())
 
         for product_name, count in tuple_list:
-            self.trie.insert(product_name)
+            # self.trie.insert(product_name)
             self.avl_tree.insert(product_name, count)
 
         # Also insert user IDs so the search/autocomplete can suggest users
