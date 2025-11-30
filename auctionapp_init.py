@@ -440,8 +440,11 @@ class AuctionAppInit:
         if search_term == "":
             return
 
-
-
+        results = [item for item in self.all_items_listbox.get(0, tk.END) if search_term.lower() in item.lower()]
+        self.all_items_listbox.delete(0, tk.END)
+        for item in results:
+            self.all_items_listbox.insert(tk.END, item)
+        self.hide_tooltip()
 
     def add_item_widget(self):
         new_item_widget = tk.Toplevel(self.root)
@@ -645,19 +648,15 @@ class AuctionAppInit:
     # *** TRIE: für Autovervollständigung bei Suche nach Produkten in Liste ***
 
     def initialize_trie(self):
-
-        #user_ids = list(self._auctions.users().keys())
-
+        user_ids = list(self._auctions.users().keys())
         product_names = self._auctions.get_all_item_names()
-
         counter = Counter(product_names)
         tuple_list = list(counter.items())
-
         for product_name, count in tuple_list:
             self.trie.insert(product_name)
             self.avl_tree.insert(product_name, count)
         #for user_id in user_ids:
-            #self.trie.insert(user_id)
+        #self.trie.insert(user_id)
 
 
     def show_tooltip(self, suggestions):
@@ -707,6 +706,7 @@ class AuctionAppInit:
         if self.tooltip:
             self.tooltip.destroy()
             self.tooltip = None
+
 
     def update_tooltip_position(self, event):
         """Update tooltip position when the window is moved or resized."""
