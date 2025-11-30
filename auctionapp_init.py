@@ -648,6 +648,7 @@ class AuctionAppInit:
     # *** TRIE: für Autovervollständigung bei Suche nach Produkten in Liste ***
 
     def initialize_trie(self):
+        # Insert product names into trie/avl tree (with counts)
         product_names = self._auctions.get_all_item_names()
 
         counter = Counter(product_names)
@@ -656,6 +657,19 @@ class AuctionAppInit:
         for product_name, count in tuple_list:
             self.trie.insert(product_name)
             self.avl_tree.insert(product_name, count)
+
+        # Also insert user IDs so the search/autocomplete can suggest users
+        # Users are available via self._users (created in __init__).
+        try:
+            user_ids = list(self._users.keys())
+        except Exception:
+            user_ids = []
+
+        for user_id in user_ids:
+            # Insert each user id with a count of 1 into the trie and AVL tree
+            self.trie.insert(user_id)
+            self.avl_tree.insert(user_id, 1)
+
 
     def show_tooltip(self, suggestions):
         if self.tooltip:
