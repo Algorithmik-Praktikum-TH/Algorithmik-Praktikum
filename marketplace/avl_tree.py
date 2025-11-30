@@ -139,14 +139,7 @@ class AVLTree:
         end_word = start_word[:-1] + str(chr(ord(start_word[-1]) + 1))
 
         if self.root is not None:
-            if start_word < self.root.key < end_word:
-                words_dict[self.root.key] = self.root.values[0]
-                self._find_most_likely_words(self.root.left_child, words_dict, start_word, end_word)
-                self._find_most_likely_words(self.root.right_child, words_dict, start_word, end_word)
-            elif self.root.key <= start_word:
-                self._find_most_likely_words(self.root.right_child, words_dict, start_word, end_word)
-            elif self.root.key >= end_word:
-                self._find_most_likely_words(self.root.left_child, words_dict, start_word, end_word)
+            self.avl_tree
 
         # Liste der Wörter sortiert nach Value absteigend
         sorted_words = [product for product, count in sorted(words_dict.items(), key=lambda x: x[1], reverse=True)]
