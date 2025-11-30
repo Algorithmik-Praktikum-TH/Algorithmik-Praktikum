@@ -57,7 +57,7 @@ class Transactions:
     
     # *** PRIVATE METHODS ***
     
-    # TODO: Erstellt eine bessere Hashfunktion, welche möglichst wenig Kollisionen generiert
+
     def _hash_fn(self, tx: Transaction) -> int:
         """
         Improved hash function:
