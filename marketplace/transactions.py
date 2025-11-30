@@ -56,7 +56,6 @@ class Transactions:
         return self._size
     
     # *** PRIVATE METHODS ***
-    
 
     def _hash_fn(self, tx: Transaction) -> int:
         """
