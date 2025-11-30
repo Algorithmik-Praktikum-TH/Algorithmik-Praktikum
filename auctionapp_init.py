@@ -648,15 +648,15 @@ class AuctionAppInit:
     # *** TRIE: für Autovervollständigung bei Suche nach Produkten in Liste ***
 
     def initialize_trie(self):
+        #user_ids = list(self._auctions.users().keys())
         product_names = self._auctions.get_all_item_names()
-
         counter = Counter(product_names)
         tuple_list = list(counter.items())
-
         for product_name, count in tuple_list:
             self.trie.insert(product_name)
             self.avl_tree.insert(product_name, count)
-
+        #for user_id in user_ids:
+            #self.trie.insert(user_id)
     def show_tooltip(self, suggestions):
         if self.tooltip:
             self.tooltip.destroy()
