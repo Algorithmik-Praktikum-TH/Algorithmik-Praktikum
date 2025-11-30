@@ -60,12 +60,8 @@ class Transactions:
     # TODO: Erstellt eine bessere Hashfunktion, welche möglichst wenig Kollisionen generiert
     def _hash_fn(self, tx: Transaction) -> int:
         """
-        Deliberately bad key function:
-        Use ONLY the first character of the product name.
+        Improved hash function:
+        Uses Python's built-in hash() which considers all fields of the frozen dataclass.
         """
-        if not tx.product_name:
-            return 0
-        first = tx.product_name[0].lower()
-        # Map 'a'..'z' to 0..25, everything else also squeezed into the table
-        return (ord(first) - ord('a')) % self._capacity
+        return hash(tx) % self._capacity
 
