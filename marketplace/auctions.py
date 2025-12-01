@@ -250,28 +250,16 @@ class Auctions(dict):
         :param with_num_stars: if True, then return stars together with user_id, else only return user_id
         :return:
         """
-        # TODO: do not use this part
-        # stupid brute force implementation
-        max_user = None
-        max_stars = 0
-        for user_id, user in self._users.items():
-            stars_mean = user.get_rating_stars_mean()
-            if stars_mean > max_stars:
-                max_stars = stars_mean
-                max_user = user_id
+        # TODO: instead use and probably change this
+        if not self._heap_users_rated:
+            return None
+
+        stars, user_id = self._heap_users_rated.get_top_user()
 
         if with_num_stars:
-            return [max_stars, max_user]
+            return [stars, user_id]
         else:
-            return max_user
-
-        # TODO: instead use and probably change this
-        # if not self._heap_users_rated:
-        #     return None
-        # if with_num_stars:
-        #     return self._heap_users_rated.get_top_user()
-        # else:
-        #     return self._heap_users_rated.get_top_user()[1]
+            return user_id
 
     def get_active_auctions(self):
         auctions_active = {}
