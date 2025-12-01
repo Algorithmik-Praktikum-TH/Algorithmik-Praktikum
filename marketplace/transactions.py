@@ -56,16 +56,22 @@ class Transactions:
         return self._size
     
     # *** PRIVATE METHODS ***
-    
-    # TODO: Erstellt eine bessere Hashfunktion, welche möglichst wenig Kollisionen generiert
+
     def _hash_fn(self, tx: Transaction) -> int:
         """
-        Deliberately bad key function:
-        Use ONLY the first character of the product name.
-        """
-        if not tx.product_name:
-            return 0
-        first = tx.product_name[0].lower()
-        # Map 'a'..'z' to 0..25, everything else also squeezed into the table
-        return (ord(first) - ord('a')) % self._capacity
+        Polynomial Rolling Hash – uses a simple rolling hash over the entire product name.
 
+        No built-in hash() is used; only ord() and arithmetic.
+        """
+        name = tx.product_name.lower()
+        if not name:
+            return 0
+
+        p = 31  # kleine Primzahl als Basis
+        m = self._capacity  # Tabellenkapazität
+        h = 0
+
+        for char in name:
+            h = (h * p + ord(char)) % m
+
+        return h
