@@ -30,7 +30,6 @@ class AuctionApp(AuctionAppInit):
                 ))
 
         top_user = self._auctions.get_top_rated_user(True)
-
         if top_user is not None:
             self.system_messages.push("Der am besten bewertete User mit {0:.1f} Sternen ist user {1}.".format(
                     top_user[0], top_user[1])

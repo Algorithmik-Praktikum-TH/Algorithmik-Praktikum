@@ -17,7 +17,7 @@ class Users(marketplace.praktikumsgruppen.Praktikumsgruppen):
         super().__init__()
 
         self._read_users_from_csvfile(csvfile)
-
+        
         self._read_friends_csv('friends.csv')
 
         # erstelle Praktikumsgruppen als Menge disjunkter Mengen bzw. als dictionary (1. und 2. Praktikum)

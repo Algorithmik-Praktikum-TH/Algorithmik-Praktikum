@@ -44,11 +44,16 @@ class Auctions(dict):
         #  get_top_rated_user() (s.u.) in konstanter Zeit zurück geben zu können. auf der GUI gibt es noch keinen Button
         #  mit dem Sie andere Nutzer bewerten können. das wird alles simuliert in simulator.py. Sie können von jedem
         #  User über die Methode user.User.get_rating_stars_mean() die mittlere Anzahl Sterne abfragen.
-        self._heap_users_rated = None
 
         self._transactions = Transactions(128)
 
         self._users = marketplace.users.Users("user.csv")
+        try:
+            self._heap_users_rated = MaxHeap()
+            for user_id in self._users:
+                self._heap_users_rated.add_auction(user_id,self._users[user_id].get_rating_stars_mean())
+        except:
+            self._heap_users_rated = None
 
         self._read_auctions_from_csvfile(csvfile)
 
@@ -253,8 +258,9 @@ class Auctions(dict):
         # TODO: instead use and probably change this
         if not self._heap_users_rated:
             return None
-
-        stars, user_id = self._heap_users_rated.get_top_user()
+        user = self._heap_users_rated.get_auction_with_max_bidders()
+        stars = user[0]
+        user_id = user[1]
 
         if with_num_stars:
             return [stars, user_id]
