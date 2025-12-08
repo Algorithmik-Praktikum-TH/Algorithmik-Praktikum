@@ -25,7 +25,7 @@ class AuctionAppInit:
         self.root.columnconfigure(0, weight=1)
 
         self._auctions = marketplace.auctions.Auctions("auctions.csv")
-
+        self.user_rating = self._auctions._heap_users_rated
         self._users = self._auctions.users()
 
         # der aktuell eingeloggte user
@@ -112,6 +112,8 @@ class AuctionAppInit:
 
         self.add_item_btn = tk.Button(self.frame_myauctions, text="Auktion hinzufügen", command=self.add_item_widget)
         self.add_item_btn.grid(row=1, column=4, padx=5, pady=5, sticky="ew")
+        self.rate_user_btn = tk.Button(self.frame_myauctions, text="Nutzer mit 5 Sternen bewerten", command=self.rate_user_widget)
+        self.rate_user_btn.grid(row=0, column=4, padx=5, pady=5, sticky="ew")
 
         self.delete_item_btn = tk.Button(self.frame_myauctions, text="Auktion löschen", command=self.delete_item)
         self.delete_item_btn.grid(row=2, column=4, padx=5, pady=5, sticky="ew")
@@ -445,7 +447,22 @@ class AuctionAppInit:
         for item in results:
             self.all_items_listbox.insert(tk.END, item)
         self.hide_tooltip()
+    def rate_user(self,stars:int):
+        currentuser = self._current_user.id()
+        self.user_rating.update_bidders(currentuser,stars)
+        print("test")
 
+    def rate_user_widget(self):
+        new_item_widget = tk.Toplevel(self.root)
+        new_item_widget.title("User Raten")
+
+        tk.Label(new_item_widget, text="Rate Stars (1-5):").grid(row=0, column=0, padx=5, pady=5)
+        self.new_rating= tk.Entry(new_item_widget)
+        self.new_rating.grid(row=0, column=1, padx=5, pady=5)
+        self.new_rating.insert(0, " ")
+
+        ok_button = tk.Button(new_item_widget, text="OK", command=lambda: self.rate_user(int(self.new_rating.get())))
+        ok_button.grid(row=3, column=0, columnspan=2, pady=10)
     def add_item_widget(self):
         new_item_widget = tk.Toplevel(self.root)
         new_item_widget.title("Artikel hinzufügen")
@@ -540,7 +557,7 @@ class AuctionAppInit:
 
     def enable_widgets(self, enable=True):
         widgets = [
-            self.add_item_btn, self.delete_item_btn, self.show_bids_radio,
+            self.add_item_btn, self.delete_item_btn, self.show_bids_radio,self.rate_user_btn,
             self.show_won_items_radio, self.show_offered_items_radio, self.show_recommended_items_radio,
             self.friends_listbox, self.btn_add_friend, self.remove_friend_btn,
             self.search_entry, self.search_btn, self.all_items_listbox,
